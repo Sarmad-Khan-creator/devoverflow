@@ -2,10 +2,12 @@ import User from "@/database/user.model";
 import connectToDatabase from "../mongoose";
 import {
   CreateUserParams,
+  DeleteUserParams,
   GetUserByIdParams,
   UpdateUserParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
+import error from "next/error";
 
 export async function createUser(userData: CreateUserParams) {
   try {
@@ -48,6 +50,26 @@ export async function updateUser(params: UpdateUserParams) {
     revalidatePath(path);
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+}
+
+export async function deleteUser(params: DeleteUserParams) {
+  try {
+    connectToDatabase();
+
+    const { clerkId } = params;
+
+    const user = await User.findOneAndDelete({ clerkId });
+
+    if (!user) {
+      throw new Error("no user found");
+    }
+
+    const deletedUser = await User.findByIdAndDelete(user._id);
+
+    return deletedUser;
+  } catch (error) {
     throw error;
   }
 }
