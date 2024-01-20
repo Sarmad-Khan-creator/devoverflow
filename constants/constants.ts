@@ -1,39 +1,73 @@
-import { SidebarLink } from "../types";
+import { SidebarLink } from "@/types";
 
-export const sidebarLink: SidebarLink[] = [
+export const themes = [
+  { value: "light", label: "Light", icon: "/assets/icons/sun.svg" },
+  { value: "dark", label: "Dark", icon: "/assets/icons/moon.svg" },
+  { value: "system", label: "System", icon: "/assets/icons/computer.svg" },
+];
+
+export const sidebarLinks: SidebarLink[] = [
   {
-    imageUrl: "/assets/icons/home.svg",
+    imgURL: "/assets/icons/home.svg",
     route: "/",
     label: "Home",
   },
   {
-    imageUrl: "/assets/icons/users.svg",
+    imgURL: "/assets/icons/users.svg",
     route: "/community",
-    label: "Coummunity",
+    label: "Community",
   },
   {
-    imageUrl: "/assets/icons/star.svg",
+    imgURL: "/assets/icons/star.svg",
     route: "/collection",
-    label: "Collection",
+    label: "Collections",
   },
   {
-    imageUrl: "/assets/icons/suitcase.svg",
+    imgURL: "/assets/icons/suitcase.svg",
     route: "/jobs",
     label: "Find Jobs",
   },
   {
-    imageUrl: "/assets/icons/tag.svg",
+    imgURL: "/assets/icons/tag.svg",
     route: "/tags",
     label: "Tags",
   },
   {
-    imageUrl: "/assets/icons/user.svg",
+    imgURL: "/assets/icons/user.svg",
     route: "/profile",
     label: "Profile",
   },
   {
-    imageUrl: "/assets/icons/question.svg",
+    imgURL: "/assets/icons/question.svg",
     route: "/ask-question",
     label: "Ask a question",
   },
 ];
+
+export const BADGE_CRITERIA = {
+  QUESTION_COUNT: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  ANSWER_COUNT: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  QUESTION_UPVOTES: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  ANSWER_UPVOTES: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  TOTAL_VIEWS: {
+    BRONZE: 1000,
+    SILVER: 10000,
+    GOLD: 100000,
+  },
+};

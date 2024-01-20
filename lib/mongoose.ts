@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 
 let isConnected = false;
 
-const connectToDatabase = async () => {
-  mongoose.set("strictQuery", true);
-
+export const connectToDatabase = async () => {
   if (!process.env.MONGODB_URL) {
     return console.log("Missing MONGODB URL");
   }
@@ -19,11 +17,11 @@ const connectToDatabase = async () => {
       dbName: "devOverFlow",
     });
 
+    mongoose.set("strictQuery", true);
+
     isConnected = true;
     console.log("Connected");
   } catch (error) {
     console.log("Error while connecting to database", error);
   }
 };
-
-export default connectToDatabase;

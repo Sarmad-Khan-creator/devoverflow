@@ -3,35 +3,44 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import GlobalSearch from "../search/GlobalSearch";
+import Theme from "./Theme";
+import MobileNav from "./MobileNav";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-between px-10 py-6 items-center bg-slate-100">
-      <div className="flex items-center gap-3">
+    <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
+      <Link href="/" className="flex items-center gap-3">
         <Image
           src="/assets/images/site-logo.svg"
-          width={28}
-          height={28}
+          width={23}
+          height={23}
           alt="site logo"
         />
-        <p className="font-inter font-bold">
-          Dev <span className="text-orange-500">Flow</span>
+        <p className="h2-bold font font-spaceGrotesk text-dark-100 dark:text-light-900 max-sm:hidden">
+          Dev <span className="text-primary-500">Overflow</span>
         </p>
-      </div>
+      </Link>
       <GlobalSearch />
 
-      <SignedIn>
-        <UserButton afterSignOutUrl="/" />
-      </SignedIn>
-      <SignedOut>
-        <Link
-          href="/sign-in"
-          className="bg-orange-500 py-2 px-5 rounded-md text-white"
-        >
-          Sign in
-        </Link>
-      </SignedOut>
-    </div>
+      <div className="flex-between gap-5">
+        <Theme />
+        <SignedIn>
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "h-10 w-10",
+              },
+              variables: {
+                colorPrimary: "#ff7000",
+              },
+            }}
+          />
+        </SignedIn>
+
+        <MobileNav />
+      </div>
+    </nav>
   );
 };
 
