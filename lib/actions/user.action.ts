@@ -320,6 +320,7 @@ export async function getUserInfo(params: GetUserByIdParams) {
       },
     ];
 
+    // @ts-ignore
     const badgeCounts = assignBadges({ criteria });
 
     return {
