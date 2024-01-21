@@ -10,6 +10,7 @@ import {
 import Tag, { ITag } from "@/database/tag.model";
 import Question from "@/database/question.model";
 import { FilterQuery } from "mongoose";
+import { map } from "svix/dist/openapi/rxjsStub";
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
@@ -24,10 +25,33 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
     // Find interactions for the user and group by tags...
     // Interaction...
 
-    return [
-      { _id: "1", name: "tag" },
-      { _id: "2", name: "tag2" },
-    ];
+    const usersQuestion = await Question.find({ author: user._id });
+
+    console.log(usersQuestion);
+
+    const questionIds = usersQuestion.map((question) => question._id);
+
+    let popularTags;
+
+    if (usersQuestion) {
+      popularTags = await Tag.aggregate([
+        {
+          $match: { questions: { $in: questionIds } },
+        },
+        { $project: { _id: 1, tagsNumber: { $size: "$questions" }, name: 1 } },
+        {
+          $group: {
+            _id: "$_id",
+            name: { $addToSet: "$name" },
+            tagsNumber: { $addToSet: "$tagsNumber" },
+          },
+        },
+        { $sort: { tagsNumber: -1 } },
+        { $limit: 3 },
+      ]);
+    }
+
+    return popularTags;
   } catch (error) {
     console.log(error);
     throw error;
